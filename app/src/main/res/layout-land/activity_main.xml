@@ -18,7 +18,7 @@
         <Button
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="300dp"
             android:layout_marginBottom="5dp"
             android:layout_gravity="center|bottom"
             android:id="@+id/camera_button"
