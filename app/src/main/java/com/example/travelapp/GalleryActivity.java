@@ -1,8 +1,12 @@
 package com.example.travelapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +18,26 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        Log.d(TAG, "onCreate: started");
+        int position = getIntent().getIntExtra("position", 0);
+        TextView titleTextView = (TextView) findViewById(R.id.titleView);
 
-        TextView titleTextView = (TextView) findViewById(R.id.textView);
-        titleTextView.setText("HOLIDAY");
-
-        TextView comment1 = (TextView) findViewById(R.id.textView2);
-        comment1.setText("Ana: a fost o excursie exceptionala! Ne vom intoarce si la anul!");
-        TextView comment2 = (TextView) findViewById(R.id.textView3);
-        comment2.setText("Loredana: un loc de neuitat!");
+        switch(position) {
+            case 0:
+                titleTextView.setText("TURKEY");
+                break;
+            case 1:
+                titleTextView.setText("FRANCE");
+                break;
+                case 2:
+                    titleTextView.setText("SPAIN");
+                break;
+            case 3:
+                titleTextView.setText("GREECE");
+                break;
+            case 4:
+                titleTextView.setText("JAPAN");
+                break;
+        }
 
     }
 

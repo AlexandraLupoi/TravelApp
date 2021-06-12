@@ -1,5 +1,7 @@
 package com.example.travelapp;
 
+import android.graphics.Bitmap;
+
 public class LocationModal {
     private String locationName;
     private String locationDescription;

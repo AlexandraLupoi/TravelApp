@@ -12,19 +12,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -165,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements LocationAdapter.O
     public void onNoteClick(int position) {
         locationModalArrayList.get(position);
         Intent intent = new Intent(this, GalleryActivity.class);
+        intent.putExtra("position", position);
         startActivity(intent);
     }
 }
