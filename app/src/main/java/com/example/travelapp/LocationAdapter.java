@@ -1,23 +1,30 @@
 package com.example.travelapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
     private ArrayList<LocationModal> locationModalArrayList;
-    private Context context;
+    private OnNoteListener onNoteListener;
 
-    public LocationAdapter(ArrayList<LocationModal> locationModalArrayList, Context context) {
+    public LocationAdapter(ArrayList<LocationModal> locationModalArrayList, Context context, OnNoteListener onNoteListener) {
         this.locationModalArrayList = locationModalArrayList;
-        this.context = context;
+        this.onNoteListener = onNoteListener;
     }
 
     public void filterList(ArrayList<LocationModal> filterlist) {
@@ -29,7 +36,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public LocationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.location_rv_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, onNoteListener);
     }
 
     @Override
@@ -44,14 +51,27 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         return locationModalArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView locationNameTV, locationDescTV;
-
-        public ViewHolder(@NonNull View itemView) {
+        OnNoteListener onNoteListener;
+        RelativeLayout parentLayout;
+        public ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
-
             locationNameTV = itemView.findViewById(R.id.idTVLocationName);
             locationDescTV = itemView.findViewById(R.id.idTVLocationDescription);
+            parentLayout = itemView.findViewById(R.id.parent_layout);
+            this.onNoteListener = onNoteListener;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onNoteListener.onNoteClick(getAbsoluteAdapterPosition());
         }
     }
+    public interface  OnNoteListener {
+        void onNoteClick(int position);
+    }
+
 }

@@ -18,19 +18,21 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationAdapter.OnNoteListener {
 
     Button camera_open_id;
-    ImageView click_image_id;
+   /* ImageView click_image_id;*/
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     if(result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         Bitmap photo = (Bitmap)data.getExtras().get("data");
-                        click_image_id.setImageBitmap(photo);
+                        /*click_image_id.setImageBitmap(photo);*/
                     }
                 }
             }
@@ -58,8 +60,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         camera_open_id = (Button)findViewById(R.id.camera_button);
-        click_image_id = (ImageView)findViewById(R.id.click_image);
+       /* click_image_id = (ImageView)findViewById(R.id.click_image);*/
 
         camera_open_id.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         locationModalArrayList.add(new LocationModal("Greece", "Come to visit Greece."));
         locationModalArrayList.add(new LocationModal("Japan", "Come to visit Japan."));
 
-        adapter = new LocationAdapter(locationModalArrayList, MainActivity.this);
+        adapter = new LocationAdapter(locationModalArrayList, MainActivity.this, this);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
 
@@ -156,5 +159,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onNoteClick(int position) {
+        locationModalArrayList.get(position);
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
     }
 }
